@@ -1,0 +1,41 @@
+{
+  "$anchor": "fillin-course",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$patch": {
+    "source": {
+      "$ref": "course"
+    },
+    "with": {
+      "properties": {
+        "_globals": {
+          "type": "object",
+          "default": {},
+          "properties": {
+            "_components": {
+              "type": "object",
+              "default": {},
+              "properties": {
+                "_fillin": {
+                  "type": "object",
+                  "title": "Fillin",
+                  "default": {},
+                  "properties": {
+                    "ariaRegion": {
+                      "type": "string",
+                      "title": "ARIA region",
+                      "default": "Select the option that best completes the sentence.",
+                      "_adapt": {
+                        "translatable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

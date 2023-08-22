@@ -1,0 +1,15 @@
+{
+  "name": "adapt-fillin",
+  "version": "1.0.0",
+  "framework": ">=5.19.1",
+  "homepage": "https://github.com/nachocinalli/fillin",
+  "bugs": "https://github.com/nachocinalli/fillin/issues",
+  "component": "fillin",
+  "targetAttribute": "_fillin",
+  "displayName": "Fillin",
+  "description": "Fillin component",
+  "main": "/js/adapt-fillin.js",
+  "keywords": ["adapt-plugin", "adapt-component"],
+  "license": "GPL-3.0",
+  "private": true
+}

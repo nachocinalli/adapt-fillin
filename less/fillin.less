@@ -1,0 +1,53 @@
+.fillin {
+  &__items-blanks,
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+  &__options {
+    gap: 1rem;
+    button.is-disabled {
+      span {
+        visibility: hidden;
+      }
+    }
+  }
+  &__text {
+    padding: 0 0.25rem;
+    &:not(.blank) {
+      border-bottom: 1px dashed #ccc;
+    }
+
+    button {
+      min-width: 3rem;
+      min-height: 1rem;
+      padding: 0 0.25rem;
+      border-bottom: 1px solid #ccc;
+      &.is-disabled {
+        background-color: transparent;
+        span {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+  &__widget.is-disabled {
+    button {
+      cursor: default;
+      background-color: #666;
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        background-color: #666;
+      }
+    }
+    .fillin__items-blanks {
+      button {
+        background-color: rgba(0, 0, 0, 0.15);
+        .no-touch &:not(.is-disabled):not(.is-locked):hover {
+          background-color: rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+}
