@@ -6,6 +6,7 @@ class FillinView extends QuestionView {
   }
 
   setupQuestion() {
+    if (this.model.get('_isSubmitted')) return;
     this.model.setupRandomisation();
   }
 
