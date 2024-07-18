@@ -17,7 +17,6 @@ export default class FillinModel extends ItemsQuestionModel {
       };
     });
     this.set({ correctResponses, _selectable: correctResponses.length, _isRandom: true });
-
     distractors.forEach((distractor, index) => {
       _items.push({
         _index: _items.length + index,
@@ -48,6 +47,25 @@ export default class FillinModel extends ItemsQuestionModel {
     this.set({ _wordsWithBlanks: wordsWithBlanks });
   }
 
+  resetItems() {
+    super.resetItems();
+    this.resetActiveItems();
+    this.resetWordsWithBlanks();
+  }
+
+  resetWordsWithBlanks() {
+    const wordsWithBlanks = this.get('_wordsWithBlanks');
+    const wordsWithBlanksCopy = [...wordsWithBlanks];
+    wordsWithBlanksCopy.forEach((word) => {
+      if (word.type === 'blank') {
+        word._index = -1;
+        word.text = '';
+        word._isActive = false;
+      }
+    });
+    this.set('_wordsWithBlanks', wordsWithBlanksCopy);
+  }
+
   canSubmit() {
     const activeItems = this.getActiveItems();
     return activeItems.length === this.get('_selectable');
@@ -58,25 +76,21 @@ export default class FillinModel extends ItemsQuestionModel {
 
     const itemModels = this.getChildren();
     const userAnswer = this.get('_userAnswer');
-    userAnswer.forEach((index, count) => {
-      const itemModel = itemModels.find((item) => item.get('_index') === index);
-      itemModel.toggleActive(true);
+    if (!userAnswer || userAnswer.length === 0) return;
 
-      const wordsWithBlanks = this.get('_wordsWithBlanks');
-      const indexBlank = wordsWithBlanks.findIndex((item) => item._index === index);
-      wordsWithBlanks[indexBlank] = {
-        _index: index,
-        text: itemModel.get('text'),
-        type: 'blank',
-        _isActive: true
-      };
-      const correctResponse = this.get('correctResponses').find((correctResponse) => correctResponse.index === index);
-
-      if (!correctResponse) return;
-      const isCorrect = count === correctResponse.index || correctResponse.text.toUpperCase() === this.getItem(count).get('text').toUpperCase();
-      itemModel.set('_shouldBeSelected', isCorrect);
+    const wordsWithBlanks = this.get('_wordsWithBlanks');
+    let blankIndex = -1;
+    wordsWithBlanks.forEach((word) => {
+      if (word.type === 'blank') {
+        blankIndex++;
+        const itemModel = itemModels.find((item) => item.get('_index') === userAnswer[blankIndex]);
+        word._index = userAnswer[blankIndex];
+        word.text = itemModel.get('text');
+        word._isActive = true;
+        itemModel.toggleActive(true);
+      }
     });
-
+    this.set('_wordsWithBlanks', wordsWithBlanks);
     this.setQuestionAsSubmitted();
     this.markQuestion();
     this.setScore();
@@ -126,7 +140,7 @@ export default class FillinModel extends ItemsQuestionModel {
           };
           if (word.includes('[')) {
             wordWithBlank.type = 'blank';
-            wordWithBlank.text = this.getItem(userAnswer[index]).get('text');
+            wordWithBlank.text = this.getItem(userAnswer[index])?.get('text');
             wordWithBlank._isActive = true;
             index++;
           }
