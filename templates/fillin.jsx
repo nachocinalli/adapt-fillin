@@ -3,13 +3,19 @@ import React from 'react';
 import { templates, classes } from 'core/js/reactHelpers';
 
 export default function Fillin(props) {
-  const { _graphic, _wordsWithBlanks, _items, _isEnabled, onItemSelect } = props;
-
+  const { _graphic, _wordsWithBlanks, _items, _isEnabled, _isInteractionComplete, onItemSelect } = props;
   return (
     <div className='component__inner fillin__inner'>
       <templates.header {...props} />
 
-      <div className='fillin__widget component__widget'>
+      <div
+        className={classes([
+          'component__widget',
+          'fillin__widget',
+          !_isEnabled && 'is-disabled',
+          _isInteractionComplete && 'is-complete is-submitted show-user-answer'
+        ])}
+      >
         <templates.image {..._graphic} classNamePrefixes={['component', 'fillin']} attributionClassNamePrefixes={['component', 'fillin']} />
 
         <div className='fillin__items-blanks'>
