@@ -3,7 +3,16 @@ import React from 'react';
 import { templates, classes } from 'core/js/reactHelpers';
 
 export default function Fillin(props) {
-  const { _graphic, _wordsWithBlanks, _items, _isEnabled, _isInteractionComplete, onItemSelect } = props;
+  const { _graphic, _wordsWithBlanks, _items, _isEnabled, _isInteractionComplete, onItemSelect, hasUndoButton } = props;
+  const undo = () => {
+    _wordsWithBlanks.forEach((word) => {
+      if (word.type === 'blank' && word._isActive) {
+        onItemSelect(word);
+      }
+    });
+  };
+  //
+  const hasItemActive = _items?.some((item) => item._isActive);
   return (
     <div className='component__inner fillin__inner'>
       <templates.header {...props} />
@@ -12,6 +21,7 @@ export default function Fillin(props) {
         className={classes([
           'component__widget',
           'fillin__widget',
+          hasUndoButton && 'has-undo-btn',
           !_isEnabled && 'is-disabled',
           _isInteractionComplete && 'is-complete is-submitted show-user-answer'
         ])}
@@ -50,6 +60,15 @@ export default function Fillin(props) {
               </button>
             );
           })}
+          {hasUndoButton && (
+            <button
+              className={classes(['fillin__btn-undo btn-icon'], !hasItemActive && 'is-disabled')}
+              onClick={(e) => undo()}
+              disabled={!hasItemActive}
+            >
+              <span className='icon icon-video-replay'></span>
+            </button>
+          )}
         </div>
       </div>
       <div className='btn__container'></div>

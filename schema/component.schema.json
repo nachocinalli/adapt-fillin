@@ -83,7 +83,7 @@
             "translatable": true
           }
         },
-        "_items": {
+        "_distractors": {
           "type": "array",
           "title": "Distractors",
           "items": {
@@ -94,6 +94,11 @@
               "translatable": true
             }
           }
+        },
+        "hasUndoButton": {
+          "type": "boolean",
+          "title": "Show reset button",
+          "default": false
         },
         "_feedback": {
           "type": "object",

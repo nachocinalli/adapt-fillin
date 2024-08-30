@@ -132,6 +132,15 @@
                 "translatable": true
             }
         },
+        "hasUndoButton": {
+            "type": "boolean",
+            "required": false,
+            "default": false,
+            "title": "Undo Button",
+            "inputType": "Checkbox",
+            "validators": [],
+            "help": "Show an undo button to allow the user to undo their last action"
+        },
         "_feedback": {
             "type": "object",
             "required": false,
