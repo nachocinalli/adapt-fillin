@@ -23,6 +23,7 @@
   "_hasItemScoring": false,
   "text": "The [cow] jumped over the moon",
   "_distractors": ["sheep", "horse"],
+  "hasUndoButton": true,
   "_feedback": {
     "title": "Feedback",
     "altTitle": "Alt feedback title text",
